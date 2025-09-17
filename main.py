@@ -11,16 +11,19 @@ def computer_choice(random_number):
 
 
 def scissors_rock_and_paper():
-
-    random_number = random.randint(1, 9)
-    choice_computer = computer_choice(random_number)
-    user_poin = 0
-    computer_poin = 0
+    how_many_computer_win = 0
+    how_many_user_win = 0
 
     while True:
+        user_poin = 0
+        computer_poin = 0
+
         play_game = input("Play this game?(y/n): ").lower()
         if play_game == "y":
             while True:
+                random_number = random.randint(1, 9)
+                choice_computer = computer_choice(random_number)
+
                 while True:
                     user_choice = input(
                         "Rock, Paper, or Scissors?(r/p/s): ").lower()
@@ -59,12 +62,16 @@ def scissors_rock_and_paper():
 
                 if user_poin == 3:
                     print("Conggratulation1 You Win")
+                    how_many_user_win += 1
                     break
                 elif computer_poin == 3:
+                    how_many_computer_win += 1
                     print("You Lose!")
+                    break
 
         elif play_game == "n":
-            print("Thanks for playing")
+            print(
+                f"Thanks for playing. match overview: you has {how_many_user_win} win and computer has {how_many_computer_win} win")
             break
         else:
             print('Input Invalid! please enter "y" for continue or enter "n for finish')
