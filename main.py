@@ -11,40 +11,58 @@ def computer_choice(random_number):
 
 
 def scissors_rock_and_paper():
+
+    random_number = random.randint(1, 9)
+    choice_computer = computer_choice(random_number)
+    user_poin = 0
+    computer_poin = 0
+
     while True:
         play_game = input("Play this game?(y/n): ").lower()
         if play_game == "y":
             while True:
-                user_choice = input(
-                    "Rock, Paper, or Scissors?(r/p/s): ").lower()
-                if user_choice in ["r", "p", "s"]:
-                    break
+                while True:
+                    user_choice = input(
+                        "Rock, Paper, or Scissors?(r/p/s): ").lower()
+                    if user_choice in ["r", "p", "s"]:
+                        break
+                    else:
+                        print("input must r/p/s")
+
+                if user_choice == "r" and choice_computer == "p":
+                    computer_poin += 1
+                    print(
+                        f"You Lose! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
+                elif user_choice == "r" and choice_computer == "s":
+                    user_poin += 1
+                    print(
+                        f"You win! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
+                elif user_choice == "p" and choice_computer == "s":
+                    computer_poin += 1
+                    print(
+                        f"You Lose! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
+                elif user_choice == "p" and choice_computer == "r":
+                    user_poin += 1
+                    print(
+                        f"You Win! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
+                elif user_choice == "s" and choice_computer == "r":
+                    computer_poin += 1
+                    print(
+                        f"You Lose! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
+                elif user_choice == "s" and choice_computer == "p":
+                    user_poin += 1
+                    print(
+                        f"You Win! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
                 else:
-                    print("input must r/p/s")
+                    print(
+                        f"You Draw! your choice is {user_choice} and computer is {choice_computer}")
 
-            random_number = random.randint(1, 9)
-            choice_computer = computer_choice(random_number)
+                if user_poin == 3:
+                    print("Conggratulation1 You Win")
+                    break
+                elif computer_poin == 3:
+                    print("You Lose!")
 
-            if user_choice == "r" and choice_computer == "p":
-                print(
-                    f"You Lose! your choice is {user_choice} and computer is {choice_computer}")
-            elif user_choice == "r" and choice_computer == "s":
-                print(
-                    f"You win! your choice is {user_choice} and computer is {choice_computer}")
-            elif user_choice == "p" and choice_computer == "s":
-                print(
-                    f"You Lose! your choice is {user_choice} and computer is {choice_computer}")
-            elif user_choice == "p" and choice_computer == "r":
-                print(
-                    f"You Win! your choice is {user_choice} and computer is {choice_computer}")
-            elif user_choice == "s" and choice_computer == "r":
-                print(
-                    f"You Lose! your choice is {user_choice} and computer is {choice_computer}")
-            elif user_choice == "s" and choice_computer == "p":
-                print(
-                    f"You Win! your choice is {user_choice} and computer is {choice_computer}")
-            else:
-                print(f"You Draw! your choice is {user_choice} and computer is {choice_computer}")
         elif play_game == "n":
             print("Thanks for playing")
             break
