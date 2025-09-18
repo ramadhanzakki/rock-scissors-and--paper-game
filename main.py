@@ -1,146 +1,159 @@
 import random
+import os
+import time
 
+# --- Konstanta untuk mempermudah ---
+# Dictionary untuk mengubah input singkat menjadi kata lengkap
+PILIHAN = {
+    "r": "Batu 🗿",
+    "p": "Kertas 📄",
+    "s": "Gunting ✂️"
+}
+# Skor kemenangan yang harus dicapai
+SKOR_MENANG = 3
 
-def computer_choice(random_number):
-    if random_number <= 3:
-        return "r"
-    elif random_number <= 6:
-        return "p"
-    else:
-        return "s"
+# --- Fungsi-fungsi Bantuan ---
+
+def bersihkan_layar():
+    """Membersihkan layar terminal agar tampilan lebih rapi."""
+    # 'nt' adalah untuk Windows, selain itu (Linux/Mac) menggunakan 'clear'
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def dapatkan_pilihan_pemain(nama_pemain):
+    """Meminta input dari pemain dan memvalidasinya."""
+    while True:
+        pilihan = input(f"{nama_pemain}, masukkan pilihanmu (r/p/s): ").lower()
+        if pilihan in PILIHAN:
+            return pilihan
+        else:
+            print("Input tidak valid! Harap masukkan 'r' untuk Batu, 'p' untuk Kertas, atau 's' untuk Gunting.")
+
+def tentukan_pemenang(pilihan1, pilihan2):
+    """Menentukan pemenang ronde berdasarkan dua pilihan. Mengembalikan 'pemain1', 'pemain2', atau 'seri'."""
+    if pilihan1 == pilihan2:
+        return "seri"
     
-
-def input_player():
-    while True:
-        player_choice = input("Rock, Paper, or Scissors?(r/p/s): ").lower()
-        if player_choice in ["r","p","s"]:
-            return player_choice
-        else:
-            print("you must input r/p/s")
-
-
-def scissors_rock_and_paper():
-    how_many_computer_win = 0
-    how_many_user_win = 0
-
-    while True:
-        user_poin = 0
-        computer_poin = 0
-
-        play_game = input("Play this game?(y/n): ").lower()
-        if play_game == "y":
-            while True:
-                random_number = random.randint(1, 9)
-                choice_computer = computer_choice(random_number)
-
-                while True:
-                    user_choice = input(
-                        "Rock, Paper, or Scissors?(r/p/s): ").lower()
-                    if user_choice in ["r", "p", "s"]:
-                        break
-                    else:
-                        print("input must r/p/s")
-
-                if user_choice == "r" and choice_computer == "p":
-                    computer_poin += 1
-                    print(
-                        f"You Lose! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
-                elif user_choice == "r" and choice_computer == "s":
-                    user_poin += 1
-                    print(
-                        f"You win! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
-                elif user_choice == "p" and choice_computer == "s":
-                    computer_poin += 1
-                    print(
-                        f"You Lose! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
-                elif user_choice == "p" and choice_computer == "r":
-                    user_poin += 1
-                    print(
-                        f"You Win! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
-                elif user_choice == "s" and choice_computer == "r":
-                    computer_poin += 1
-                    print(
-                        f"You Lose! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
-                elif user_choice == "s" and choice_computer == "p":
-                    user_poin += 1
-                    print(
-                        f"You Win! your choice is {user_choice} and computer is {choice_computer}. Computer's poin = {computer_poin} and user's poin = {user_poin}")
-                else:
-                    print(
-                        f"You Draw! your choice is {user_choice} and computer is {choice_computer}")
-
-                if user_poin == 3:
-                    print("Conggratulation1 You Win")
-                    how_many_user_win += 1
-                    break
-                elif computer_poin == 3:
-                    how_many_computer_win += 1
-                    print("You Lose!")
-                    break
-
-        elif play_game == "n":
-            print(
-                f"Thanks for playing. match overview: you has {how_many_user_win} win and computer has {how_many_computer_win} win")
-            break
-        else:
-            print('Input Invalid! please enter "y" for continue or enter "n" for finish')
-
-def two_player():
-    many_player1_win = 0
-    many_player2_win = 0
-
-    while True:
-        player1_poin = 0
-        player2_poin = 0
-        play_game = input("Play the game?(y/n): ").lower()
-        if play_game == "y":
-            while True:
-                player1 = input_player()
-                player2 = input_player()
-
-                if player1 == "p" and player2 == "s":
-                    player2_poin += 1
-                    print(f'You Lose! Player 1 is {player1} and player 2 is {player2}. Player 1 poin is {player1_poin} and player 2 poin is {player2_poin}')
-                if player1 == "p" and player2 == "r":
-                    player1_poin += 1
-                    print(f'You Win! Player 1 is {player1} and player 2 is {player2}. Player 1 poin is {player1_poin} and player 2 poin is {player2_poin}')
-                if player1 == "r" and player2 == "s":
-                    player1_poin += 1
-                    print(f'You Win! Player 1 is {player1} and player 2 is {player2}. Player 1 poin is {player1_poin} and player 2 poin is {player2_poin}')
-                if player1 == "r" and player2 == "p":
-                    player2_poin += 1
-                    print(f'You Lose! Player 1 is {player1} and player 2 is {player2}. Player 1 poin is {player1_poin} and player 2 poin is {player2_poin}')
-                if player1 == "s" and player2 == "r":
-                    player2_poin += 1
-                    print(f'You Lose! Player 1 is {player1} and player 2 is {player2}. Player 1 poin is {player1_poin} and player 2 poin is {player2_poin}')
-                if player1 == "s" and player2 == "p":
-                    player1_poin += 1
-                    print(f'You Win! Player 1 is {player1} and player 2 is {player2}. Player 1 poin is {player1_poin} and player 2 poin is {player2_poin}')
-                else:
-                    print(f"Draw! player 1 is {player1} and player 2 is {player2}. Player 1 poin is {player1_poin} and player 2 poin is {player2_poin}")
-                
-                if player1_poin == 3:
-                    many_player1_win += 1
-                    print(f'Player 1 is the winner!')
-                    break
-                elif player2_poin == 3:
-                    many_player2_win += 1
-                    print(f'Player 2 is the winner!')
-                    break
-        elif play_game == "n":
-            print(f"Thanks for playing. Overview this match: Player 1 has {many_player1_win} and Player 2 has {many_player2_win}")
-        else:
-            print('invalid input! plase enter "y" for continue or enter "n" for finnish')
-
-
-while True:
-    user_choice = input("Are you play with computer or friends?(c/f): ").lower()
-    if user_choice in ["c","f"]:
-        break
+    # Kombinasi kemenangan untuk pemain 1
+    kombinasi_menang = [("r", "s"), ("s", "p"), ("p", "r")]
+    
+    if (pilihan1, pilihan2) in kombinasi_menang:
+        return "pemain1"
     else:
-        print("input must c/p")
+        return "pemain2"
 
-if user_choice == "c":
-    scissors_rock_and_paper()
-else:
-    two_player()
+def tampilkan_hasil_ronde(pemenang, nama1, pilihan1, nama2, pilihan2, skor1, skor2):
+    """Menampilkan hasil dari satu ronde permainan."""
+    print("\n--- Hasil Ronde ---")
+    print(f"{nama1} memilih: {PILIHAN[pilihan1]}")
+    print(f"{nama2} memilih: {PILIHAN[pilihan2]}")
+    
+    if pemenang == "seri":
+        print("Hasilnya SERI! 🤝")
+    elif pemenang == "pemain1":
+        print(f"{nama1} MENANG ronde ini! 🎉")
+    else:
+        print(f"{nama2} MENANG ronde ini! 🎉")
+        
+    print(f"Skor Saat Ini -> {nama1}: {skor1} | {nama2}: {skor2}")
+    print("-------------------\n")
+    time.sleep(2) # Beri jeda 2 detik agar pemain bisa membaca hasil
+
+# --- Mode Permainan Utama ---
+
+def mainkan_lawan_komputer():
+    """Logika utama untuk permainan melawan komputer."""
+    skor_pemain = 0
+    skor_komputer = 0
+    
+    while skor_pemain < SKOR_MENANG and skor_komputer < SKOR_MENANG:
+        bersihkan_layar()
+        print("=== ⚔️ ANDA vs KOMPUTER 🤖 ===")
+        print(f"Skor: Anda {skor_pemain} - {skor_komputer} Komputer")
+        
+        pilihan_pemain = dapatkan_pilihan_pemain("Anda")
+        pilihan_komputer = random.choice(list(PILIHAN.keys()))
+        
+        pemenang = tentukan_pemenang(pilihan_pemain, pilihan_komputer)
+        
+        if pemenang == "pemain1":
+            skor_pemain += 1
+        elif pemenang == "pemain2":
+            skor_komputer += 1
+            
+        tampilkan_hasil_ronde(pemenang, "Anda", pilihan_pemain, "Komputer", pilihan_komputer, skor_pemain, skor_komputer)
+        
+    bersihkan_layar()
+    if skor_pemain > skor_komputer:
+        print("🏆 SELAMAT, ANDA MEMENANGKAN PERTANDINGAN! 🏆")
+    else:
+        print("😭 YAH, ANDA KALAH. COBA LAGI! 😭")
+    print(f"Skor Akhir: Anda {skor_pemain} - {skor_komputer} Komputer\n")
+
+def mainkan_dua_pemain():
+    """Logika utama untuk permainan dua pemain."""
+    skor_pemain1 = 0
+    skor_pemain2 = 0
+    
+    while skor_pemain1 < SKOR_MENANG and skor_pemain2 < SKOR_MENANG:
+        bersihkan_layar()
+        print("=== 🧑 PEMAIN 1 vs PEMAIN 2 🧑 ===")
+        print(f"Skor: Pemain 1 [{skor_pemain1}] - [{skor_pemain2}] Pemain 2")
+
+        pilihan_pemain1 = dapatkan_pilihan_pemain("Pemain 1")
+        
+        # Bersihkan layar agar pemain 2 tidak melihat pilihan pemain 1
+        bersihkan_layar()
+        print("=== 🧑 PEMAIN 1 vs PEMAIN 2 🧑 ===")
+        print(f"Skor: Pemain 1 [{skor_pemain1}] - [{skor_pemain2}] Pemain 2")
+        print("Pemain 1 sudah memilih. Sekarang giliran Pemain 2!")
+        
+        pilihan_pemain2 = dapatkan_pilihan_pemain("Pemain 2")
+        
+        pemenang = tentukan_pemenang(pilihan_pemain1, pilihan_pemain2)
+        
+        if pemenang == "pemain1":
+            skor_pemain1 += 1
+        elif pemenang == "pemain2":
+            skor_pemain2 += 1
+            
+        tampilkan_hasil_ronde(pemenang, "Pemain 1", pilihan_pemain1, "Pemain 2", pilihan_pemain2, skor_pemain1, skor_pemain2)
+        
+    bersihkan_layar()
+    if skor_pemain1 > skor_pemain2:
+        print("🏆 SELAMAT, PEMAIN 1 MEMENANGKAN PERTANDINGAN! 🏆")
+    else:
+        print("🏆 SELAMAT, PEMAIN 2 MEMENANGKAN PERTANDINGAN! 🏆")
+    print(f"Skor Akhir: Pemain 1 [{skor_pemain1}] - [{skor_pemain2}] Pemain 2\n")
+
+# --- Program Utama ---
+
+def main():
+    """Fungsi utama untuk menjalankan seluruh program."""
+    while True:
+        bersihkan_layar()
+        print("=========================================")
+        print("   SELAMAT DATANG DI GAME BATU GUNTING KERTAS   ")
+        print("=========================================")
+        print("Pilih mode permainan:")
+        print("1. Lawan Komputer (c)")
+        print("2. Dua Pemain (f)")
+        
+        mode = input("Pilihanmu (c/f): ").lower()
+        
+        if mode == 'c':
+            mainkan_lawan_komputer()
+        elif mode == 'f':
+            mainkan_dua_pemain()
+        else:
+            print("Pilihan tidak valid. Coba lagi.")
+            time.sleep(1)
+            continue
+            
+        main_lagi = input("Apakah kamu ingin bermain lagi? (y/n): ").lower()
+        if main_lagi != 'y':
+            print("\nTerima kasih sudah bermain! Sampai jumpa lagi! 👋")
+            break
+
+# Jalankan program utama
+if __name__ == "__main__":
+    main()
